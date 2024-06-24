@@ -8,12 +8,13 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            background: linear-gradient(135deg, #9ff0e1, #6198da);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
 
         .container {
@@ -25,6 +26,7 @@
             width: 90%;
             max-width: 400px;
             transition: transform 0.3s;
+            z-index: 10;
         }
 
         .container:hover {
@@ -91,10 +93,75 @@
             color: #e74c3c;
             font-weight: bold;
         }
+
+        /* Cloud animation styles */
+        .cloud {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            opacity: 0.8;
+        }
+
+        .x1 {
+            width: 200px;
+            height: 60px;
+            top: 100px;
+            left: -200px;
+            animation: moveCloud 30s linear infinite;
+        }
+
+        .x2 {
+            width: 100px;
+            height: 30px;
+            top: 200px;
+            left: -100px;
+            animation: moveCloud 20s linear infinite;
+        }
+
+        .x3 {
+            width: 150px;
+            height: 45px;
+            top: 300px;
+            left: -150px;
+            animation: moveCloud 25s linear infinite;
+        }
+
+        .x4 {
+            width: 120px;
+            height: 40px;
+            top: 400px;
+            left: -120px;
+            animation: moveCloud 18s linear infinite;
+        }
+
+        .x5 {
+            width: 180px;
+            height: 55px;
+            top: 500px;
+            left: -180px;
+            animation: moveCloud 28s linear infinite;
+        }
+
+        @keyframes moveCloud {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(110vw);
+            }
+        }
     </style>
 </head>
 
 <body>
+    <div class="cloud x1"></div>
+    <div class="cloud x2"></div>
+    <div class="cloud x3"></div>
+    <div class="cloud x4"></div>
+    <div class="cloud x5"></div>
+
     <div class="container">
         <h1>Weather Forecast</h1>
         <form id="weatherForm" aria-labelledby="formDescription">
