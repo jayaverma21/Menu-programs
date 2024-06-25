@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
 
 import cgi
-import cgitb
 import json
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
-# Enable CGI traceback for debugging
-cgitb.enable()
 
 print("Content-Type: application/json\n")
 
@@ -38,21 +34,17 @@ def send_bulk_emails(recipient_list, subject, body, smtp_server, smtp_port, logi
         results.append(result)
     return results
 
-# Get the form data
 form = cgi.FieldStorage()
-subject = form.getvalue("subject")+6
+subject = form.getvalue("subject")
 body = form.getvalue("body")
 smtp_server = "smtp.gmail.com"
 smtp_port = 587
 login = "name@gmail.com"
-password = "password"  # Be cautious with hardcoding passwords
+password = "password"
 
-# Retrieve and process the recipients
 recipient_field = form.getvalue("recipients")
 recipient_list = [email.strip() for email in recipient_field.split(',') if email.strip()]
 
-# Send the emails
 results = send_bulk_emails(recipient_list, subject, body, smtp_server, smtp_port, login, password)
 
-# Output the result as JSON
 print(json.dumps({"results": results}))
