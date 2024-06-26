@@ -8,8 +8,8 @@ from twilio.rest import Client
 cgitb.enable()
 
 # Twilio credentials
-account_sid = 'your twilio sid '
-auth_token = 'your twilio auth token'
+account_sid = 'your sid'
+auth_token = 'your acc auth token'
 
 # Function to send SMS
 def send_sms():
@@ -21,7 +21,7 @@ def send_sms():
     message = client.messages.create(
         body=message_body,
         to=to_number,  # Receiver mobile number
-        from_='twilio num'  # Provided by Twilio API
+        from_='your twilio no'  # Provided by Twilio API
     )
     return message.sid
 
