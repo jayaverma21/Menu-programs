@@ -6,86 +6,123 @@
     <title>Live HTML Interpreter</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background: linear-gradient(-45deg, #89f7fe, #66a6ff);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            overflow: hidden;
+            position: relative;
         }
 
-        /* Header styles */
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
         .header {
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: #fff;
-            padding: 10px 0;
+            padding: 15px;
             text-align: center;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
         }
 
         .header h1 {
             margin: 0;
             font-size: 24px;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
-        /* Home button styles */
         .home-btn {
-            background-color: transparent;
+            background: linear-gradient(45deg, #42e695, #3bb2b8);
             border: none;
             color: #fff;
             font-size: 16px;
             cursor: pointer;
-            outline: none;
             padding: 10px 20px;
             position: absolute;
             top: 10px;
             left: 10px;
-            transition: background-color 0.3s ease;
+            transition: transform 0.3s ease;
             border-radius: 5px;
         }
 
         .home-btn:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
         }
 
-        /* Container styles */
         .container {
             display: flex;
-            flex-direction: column;
-            height: calc(100vh - 40px); /* Adjust for header height */
+            flex: 1;
+            height: calc(100vh - 60px);
+            position: relative;
+            z-index: 2;
         }
 
         .editor-container {
-            flex: 1;
             display: flex;
+            flex: 1;
+            height: 100%;
+        }
+
+        .editor, .output {
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .editor {
-            flex: 1;
-            padding: 20px;
-            border-right: 1px solid #ccc;
-            box-sizing: border-box;
-            overflow-y: auto;
+            border-right: 1px solid #ddd;
         }
 
-        .output {
-            flex: 1;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
+        .ball {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            animation: move 5s linear infinite;
+            z-index: 3;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(calc(100vw - 20px), calc(100vh - 20px));
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <div class="header">
         <button class="home-btn" onclick="goToHome()">Home</button>
         <h1>Live HTML Interpreter</h1>
     </div>
 
-    <!-- Main content -->
     <div class="container">
         <div class="editor-container">
             <div class="editor" contenteditable="true" id="htmlInput">
-                <!-- Initial HTML content -->
                 <h2>Type your HTML code here:</h2>
                 <p>&lt;!DOCTYPE html&gt;</p>
                 <p>&lt;html lang="en"&gt;</p>
@@ -103,20 +140,34 @@
     </div>
 
     <script>
-        // Function to update output with user input HTML
         function updateOutput() {
             var htmlInput = document.getElementById('htmlInput').innerText;
             var htmlOutput = document.getElementById('htmlOutput');
             htmlOutput.innerHTML = htmlInput;
         }
 
-        // Update output on input change
         document.getElementById('htmlInput').addEventListener('input', updateOutput);
 
-        // Function to navigate to Home page
         function goToHome() {
             window.location.href = "index.html"; // Change index.html to your home page
         }
+
+        // Create multiple balls with random colors and positions
+        function createBalls() {
+            const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FF8C33', '#A133FF'];
+            for (let i = 0; i < 20; i++) {
+                const ball = document.createElement('div');
+                ball.className = 'ball';
+                ball.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                ball.style.top = Math.random() * 100 + 'vh';
+                ball.style.left = Math.random() * 100 + 'vw';
+                ball.style.animationDuration = Math.random() * 5 + 3 + 's';
+                ball.style.animationDirection = Math.random() > 0.5 ? 'normal' : 'reverse';
+                document.body.appendChild(ball);
+            }
+        }
+
+        createBalls();
     </script>
 </body>
 </html>
