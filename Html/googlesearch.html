@@ -5,17 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Search</title>
     <link rel="icon" href="data:,">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+            background-color: #fff;
+            padding: 20px;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px 0 0 24px;
+            box-shadow: none;
+            outline: none;
+        }
+
+        .search-box button {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 1px solid #dfe1e5;
+            border-left: 0;
+            border-radius: 0 24px 24px 0;
+            background-color: #f8f9fa;
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background-color: #e8e8e8;
+        }
+
+        .results {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .result {
+            padding: 10px;
+            border-bottom: 1px solid #dfe1e5;
+        }
+
+        .result h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #1a0dab;
+        }
+
+        .result p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #4d5156;
+        }
+
+        .result a {
+            text-decoration: none;
+            color: #1a0dab;
+        }
+
+        .result a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h2>Google Search</h2>
-    <input type="text" id="searchQuery" placeholder="Enter your search query">
-    <button id="searchBtn">Search</button>
-    <div id="results"></div>
+    <div class="logo">
+        <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo">
+    </div>
+    <div class="search-box">
+        <input type="text" id="searchQuery" placeholder="Enter your search query">
+        <button id="searchBtn">Search</button>
+    </div>
+    <div id="results" class="results"></div>
 
     <script>
         document.getElementById("searchBtn").addEventListener("click", function() {
             var query = document.getElementById("searchQuery").value.trim();
             if (query !== "") {
+                // Replace this with your actual fetch URL or API call
                 fetch('/cgi-bin/googlesearch.py?query=' + encodeURIComponent(query))
                 .then(response => response.json())
                 .then(data => {
@@ -28,19 +113,19 @@
         function displayResults(results) {
             var resultsDiv = document.getElementById("results");
             resultsDiv.innerHTML = "";
-            if (results) {
+            if (results && results.length > 0) {
                 results.forEach(function(result, index) {
                     var resultDiv = document.createElement("div");
+                    resultDiv.className = "result";
                     resultDiv.innerHTML = `
-                        <h3>Result ${index + 1}:</h3>
-                        <p>Title: ${result.title}</p>
-                        <p>Link: <a href="${result.link}" target="_blank">${result.link}</a></p>
-                        <p>Snippet: ${result.snippet}</p>
+                        <h3><a href="${result.link}" target="_blank">${result.title}</a></h3>
+                        <p>${result.snippet}</p>
+                        <a href="${result.link}" target="_blank" style="color: #1a0dab;">${result.link}</a>
                     `;
                     resultsDiv.appendChild(resultDiv);
                 });
             } else {
-                resultsDiv.textContent = "Failed to retrieve search results.";
+                resultsDiv.innerHTML = `<p style="color: #1a0dab;">No results found for your query.</p>`;
             }
         }
     </script>
