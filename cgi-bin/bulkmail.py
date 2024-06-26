@@ -39,8 +39,8 @@ subject = form.getvalue("subject")
 body = form.getvalue("body")
 smtp_server = "smtp.gmail.com"
 smtp_port = 587
-login = "name@gmail.com"
-password = "password"
+login = "jayaverma1721@gmail.com"
+password = "aesy ayhk chgz fzkq"
 
 recipient_field = form.getvalue("recipients")
 recipient_list = [email.strip() for email in recipient_field.split(',') if email.strip()]
